@@ -1,0 +1,1 @@
+stitch - Stitches files together into a single output. Inspired by *NIX/Linux 'make' tool.

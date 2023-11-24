@@ -1,1 +1,7 @@
 /stitch.log
+
+# Documentation stuff
+/docs/stitch-documentation.aux
+/docs/stitch-documentation.log
+/docs/stitch-documentation.pdf
+# The main reasons for not including .pdf is because it'll go into a different directory when made.

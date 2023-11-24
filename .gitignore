@@ -4,4 +4,6 @@
 /docs/stitch-documentation.aux
 /docs/stitch-documentation.log
 /docs/stitch-documentation.pdf
-# The main reasons for not including .pdf is because it'll go into a different directory when made.
+# ^ The main reason for not including .pdf is because it'll go into a different directory when made.
+/docs/stitch-documentation.tex
+# ^Hiding that because it's gotta get updated over time. I'll unhide when it's done.

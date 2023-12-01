@@ -1,18 +1,20 @@
-name: LaTeX and pray
-
+name: Documentation time baybee
 on: [push]
 jobs:
   build_latex:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: xu-cheng/texlive-action@v2
+      - name: Set up Git repository
+        uses: actions/checkout@v3
+      - name: Compile LaTeX document
+        uses: xu-cheng/latex-action@v3
         with:
-          docker_image: ghcr.io/xu-cheng/texlive-full:20230801
-          run: |
-            apk add pdflatex
-            cd docs
-            pdflatex -interaction=nonstopmode -halt-on-error stitch-documentation.tex
+          root_file: docs/stitch-documentation.tex
+      - name: Upload PDF file
+        uses: actions/upload-artifact@v3
+        with:
+          name: PDF
+          path: docs/stitch-documentation.pdf
             
 
 # praying

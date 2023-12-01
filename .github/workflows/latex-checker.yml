@@ -10,9 +10,9 @@ jobs:
         with:
           docker_image: ghcr.io/xu-cheng/texlive-full:20230801
           run: |
-            apk add make
+            apk add pdflatex
             cd docs
-            make
+            pdflatex -interaction=nonstopmode -halt-on-error stitch-documentation.tex
             
 
 # praying

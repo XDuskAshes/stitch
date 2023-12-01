@@ -16,6 +16,10 @@ jobs:
         directory: .
         tex-packages: "pdflatex"
 
+    - name: Please just use pdflatex for gods sake
+    run: |
+      tlmgr install pdflatex
+
     - name: Compile LaTeX document
       run: |
         pdflatex -interaction=nonstopmode -halt-on-error docs/stitch-documentation.tex

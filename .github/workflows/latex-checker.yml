@@ -14,7 +14,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: PDF
-          path: docs/stitch-documentation.pdf
+          path: stitch-documentation.pdf
             
 
 # praying

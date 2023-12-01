@@ -1,35 +1,18 @@
-name: LaTeX Build and Test
+name: LaTeX and pray
 
-on: push
-
+on: [push]
 jobs:
-  build:
+  build_latex:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - uses: actions/checkout@v4
+      - uses: xu-cheng/texlive-action@v2
+        with:
+          docker_image: ghcr.io/xu-cheng/texlive-full:20230801
+          run: |
+            apk add make
+            cd docs
+            make
+            
 
-    - name: Set up TeX environment
-      uses: xu-cheng/texlive-action@v2
-      with:
-        directory: .
-        tex-packages: "pdflatex"
-
-    - name: Please just use pdflatex for gods sake
-    run: |
-      tlmgr install pdflatex
-
-    - name: Compile LaTeX document
-      run: |
-        pdflatex -interaction=nonstopmode -halt-on-error docs/stitch-documentation.tex
-        pdflatex -interaction=nonstopmode -halt-on-error docs/stitch-documentation.tex
-
-    - name: Check if PDF is generated
-      run: |
-        if [ ! -f "your-document.pdf" ]; then
-          echo "Error: PDF not generated"
-          exit 1
-        fi
-
-# hope and pray this works, I couldn't figure it out myself so I just used chatgpt to generate this (probably) garbage chute
+# praying

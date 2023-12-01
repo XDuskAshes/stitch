@@ -1,0 +1,31 @@
+name: LaTeX Build and Test
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up TeX environment
+      uses: xu-cheng/texlive-action@v2
+      with:
+        directory: .
+        tex-packages: "pdflatex"
+
+    - name: Compile LaTeX document
+      run: |
+        pdflatex -interaction=nonstopmode -halt-on-error docs/stitch-documentation.tex
+        pdflatex -interaction=nonstopmode -halt-on-error docs/stitch-documentation.tex
+
+    - name: Check if PDF is generated
+      run: |
+        if [ ! -f "your-document.pdf" ]; then
+          echo "Error: PDF not generated"
+          exit 1
+        fi
+
+# hope and pray this works, I couldn't figure it out myself so I just used chatgpt to generate this (probably) garbage chute

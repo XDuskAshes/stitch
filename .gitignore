@@ -1,9 +1,10 @@
 /stitch.log
 
 # Documentation stuff
-/docs/stitch-documentation.aux
-/docs/stitch-documentation.log
-/docs/stitch-documentation.pdf
+/docs/*.aux
+/docs/*.log
+/docs/*.pdf
 # ^ The main reason for not including .pdf is because it'll go into a different directory when made.
-/docs/stitch-documentation.tex
+# /docs/stitch-documentation.tex
 # ^Hiding that because it's gotta get updated over time. I'll unhide when it's done.
+# Scratch that lol

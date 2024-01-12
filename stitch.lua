@@ -16,77 +16,76 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ]]
 
---[[
-    Format:
-
-    {
-        "path-to-stichable-stuff",
-        "what-to.output"
-    }
-]]
-
-local ver = 1.0
-local toLog = {}
-local toRead = ""
-local outputFile = ""
-local list = {}
-local formattedList = {}
-local logOutFile = "/stitch.log"
-
-local function log(text)
-    table.insert(toLog,text)
-end
-
-local function e(s)
-    return s == nil or s == ""
-end
-
-local function outputTheLog()
-    local handle = fs.open(logOutFile,"w")
-    handle.writeLine("This is stitch v"..ver.." by Dusk, running with ".._HOST)
-    handle.writeLine("+== Begin Log ==+")
-    for k,v in pairs(toLog) do
-        handle.writeLine(v)
-    end
-    handle.writeLine("+== End Log ==+")
-    handle.close()
-end
-
 local args = {...}
 
+local function e(s)
+    return s == "" or s == nil
+end
+
 if e(args[1]) then
-    log("Erroring, arg1 is missing.")
-    outputTheLog()
-    error("Missing arg1, should be a file following format.",0)
-else
-    if fs.exists(args[1]) then
-        if fs.isDir(args[1]) then
-            log("Erroring, arg1 is a dir. ("..args[1]..")")
-            outputTheLog()
-            error(args[1].." is a directory. Gimme a file.",0)
-        else
-            print("Found "..args[1]..", which passes all checks at current time.")
-            log("Found "..args[1]..", which passes all checks at current time.")
-            toRead = args[1]
-            log("assigned var 'toRead' same value as "..args[1])
-            print("--debug--")
-            print(toRead)
-            print(args[1])
-            log("[DEBUG] "..toRead.." | "..args[1])
-            log("[DEBUG] ^^^ THESE SHOULD MATCH ^^^")
-            print("Those should read the same. Continuing in 2s.")
-            sleep(2)
-        end
+    error("Need a file. See docs.",0)
+end
+
+if e(args[2]) then
+    error("Need a file to output to. See docs.",0)
+end
+
+local function isAFile(s)
+    if not fs.exists(s) then
+        return false
     else
-        log("Erroring, arg1 does not exist. ("..args[1]..")")
-        outputTheLog()
-        error(args[1].." is either typed wrong or doesn't exist. Reminder that by default, ComputerCraft searches from the root ('/'), so either supply a full directory path or put the file in root. DO NOT FORGET ABOUT FILE HANDLES.",0)
+        if fs.isDir(s) then
+            return false
+        else
+            return true
+        end
     end
 end
 
-print("Going to try and open then read the supplied file.")
-print("("..toRead..")")
-log("Attempting to open the supplied file. ("..toRead..")")
+local arg1IsFile = isAFile(args[1])
+local arg2Exists = isAFile(args[2])
 
-local handle = fs.open(toRead,"r")
-formattedList = handle.unserialize
+if arg1IsFile == false then
+    error("Either '"..args[1].."' doesn't exist or is a directory.",0)
+end
+
+if arg2Exists == true then
+    error("File '"..args[2].."' already exists.",0)
+elseif fs.isDir(args[2]) then
+    error("'"..args[2].."' is a directory.",0)
+end
+
+local handle
+
+local instructions = {}
+
+handle = fs.open(args[2],"w")
+handle.writeLine("")
+handle.close()
+
+handle = fs.open(args[1],"r")
+
+repeat   
+    local a = handle.readLine()
+    table.insert(instructions,a)
+until e(a)
+
+handle.close()
+
+for k,v in pairs(instructions) do
+    print(k,v)
+    local toWrite = {}
+    
+    handle = fs.open(v,"r")
+    repeat   
+        local a = handle.readLine()
+        table.insert(toWrite,a)
+    until e(a)
+    handle.close()
+
+    handle = fs.open(args[2],"a")
+    for k,v in pairs(toWrite) do
+        handle.writeLine(v)
+    end
+    handle.close()
+end

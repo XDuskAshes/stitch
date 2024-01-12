@@ -4,7 +4,5 @@
 /docs/*.aux
 /docs/*.log
 /docs/*.pdf
-# ^ The main reason for not including .pdf is because it'll go into a different directory when made.
-# /docs/stitch-documentation.tex
-# ^Hiding that because it's gotta get updated over time. I'll unhide when it's done.
-# Scratch that lol
+# ^ The main reason for not including .pdf is because you'll be expected to compile it yourself.
+# If you can't compile it, or are just lazy, use Overleaf or a different online LaTeX compiler.

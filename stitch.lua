@@ -80,7 +80,7 @@ for k,v in pairs(instructions) do
     repeat   
         local a = handle.readLine()
         table.insert(toWrite,a)
-    until e(a)
+    until a == nil
     handle.close()
 
     handle = fs.open(args[2],"a")

@@ -11,10 +11,7 @@ jobs:
         with:
           root_file: docs/stitch-documentation.tex
       - name: Upload PDF file
-        uses: actions/upload-artifact@v3
-        with:
-          name: PDF
-          path: stitch-documentation.pdf
+        run: git add docs/stitch-documentation.pdf && git commit -m "[DOCS] Make docs." && git push
             
 
 # praying

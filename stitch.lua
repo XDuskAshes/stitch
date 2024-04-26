@@ -4,6 +4,12 @@
 
 local args = {...}
 
+if args[1] == "--help" or args[1] == "-h" or args[1] == "-?" then
+	print("stitch | Cobbles files together efficiently.*")
+	print("--------------------------------------------")
+	print("--help/-h/-? | Show this help.")
+end
+
 local function e(s)
     return s == "" or s == nil
 end
@@ -51,7 +57,7 @@ handle.close()
 
 handle = fs.open(args[1],"r")
 
-repeat   
+repeat
     local a = handle.readLine()
     table.insert(instructions,a)
 until e(a)
@@ -61,13 +67,15 @@ handle.close()
 for k,v in pairs(instructions) do
     print(k,v)
     local toWrite = {}
-    
+
     handle = fs.open(v,"r")
-    repeat   
+    repeat
         local a = handle.readLine()
         table.insert(toWrite,a)
-    until a == nil
+    until a == "--<eof>"
     handle.close()
+
+    table.remove(toWrite,#toWrite)
 
     handle = fs.open(args[2],"a")
     for k,v in pairs(toWrite) do

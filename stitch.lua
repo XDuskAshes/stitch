@@ -5,6 +5,18 @@
 local args = {...}
 local ver = 1.0
 local jsonfile = args[1]
+local toLog = {}
+
+table.insert(toLog,"Stitch Log\nInfo: v"..ver.." on ".._HOST)
+
+local function log(sText)
+    table.insert(toLog,sText)
+end
+
+local function lprint(sText)
+    table.insert(toLog,sText)
+    print(sText)
+end
 
 if not fs.exists(args[1]) then
     if not fs.exists("/"..shell.dir().."/"..args[1]) then
@@ -29,9 +41,9 @@ if #build.files < 2 then
 end
 
 local listFiles = ""
-print("Build name: "..build.name)
-print("Target file: "..build.target)
-print("Source files directory: "..build.srcdir)
+lprint("Build name: "..build.name)
+lprint("Target file: "..build.target)
+lprint("Source files directory: "..build.srcdir)
 write("Files to build with: ")
 for k,v in pairs(build.files) do
     term.setTextColor(colors.green)
@@ -39,15 +51,16 @@ for k,v in pairs(build.files) do
     term.setTextColor(colors.white)
     listFiles = listFiles..v.." "
 end
-print("\n")
+lprint("\n")
+log("Building with: "..listFiles)
 
-print("Ensuring needed files in "..build.srcdir.." exist for build...")
+lprint("Ensuring needed files in "..build.srcdir.." exist for build...")
 local missingFiles = {}
 for k,v in pairs(build.files) do
     if fs.exists(build.srcdir..v) then
-        print(v..": yes")
+        lprint(v..": yes")
     else
-        print(v.." :no")
+        lprint(v.." :no")
         table.insert(missingFiles,v)
     end
     term.setTextColor(colors.white)
@@ -55,11 +68,13 @@ end
 
 if #missingFiles > 0 then
     if #missingFiles == 1 then
+        log("File not present in "..build.srcdir..": "..missingFiles[1])
         printError("A file is not present in "..build.srcdir..": "..missingFiles[1])
     else
+        log("Files not present in "..build.srcdir..": ")
         printError("Multiple files are not present in "..build.srcdir..":")
         for k,v in pairs(missingFiles) do
-            print(v)
+            lprint(v)
         end
     end
 
@@ -68,10 +83,10 @@ if #missingFiles > 0 then
         print("=====\nMake sure you have all files needed listed in "..args[1]..", or change 'ignoreMissing' to 'false' in "..args[1]..".")
         error()
     else
-        print("And we are ignoring failures, so continuing.")
+        lprint("And we are ignoring failures, so continuing.")
     end
 else
-    print("All files present")
+    lprint("All files present")
 end
 
 local function readFile(path)
@@ -85,28 +100,31 @@ local function readFile(path)
 end
 
 if verbose then
-    print("-- STARTING BUILD --")
+    log("Running verbosely")
+    lprint("\n-- STARTING BUILD --")
 
     if fs.exists(build.target) then
-        write("Target already exists: "..build.target..",")
+        log("Build target "..build.target.." already exists")
+        write("Target already exists: "..build.target..", ")
         if not replaceTarget then
             print("and we don't want to replace it, so error.")
             print("=====\nMake sure to either delete "..build.target.." or change the 'replaceTarget' value to 'true' in "..args[1]..".")
             error()
         else
-            print("and we can replace it, so do that.")
+            log("And we can replace it, so continue")
+            print("and we can replace it, so continue")
             fs.delete(build.target)
             handle = fs.open(build.target,"w")
             handle.close()
         end
     else
-        print("Target "..build.target.." doesn't exist, fresh build")
+        lprint("Target "..build.target.." doesn't exist, fresh build")
         handle = fs.open(build.target,"w")
         handle.close()
     end
 
     for k,v in pairs(build.files) do
-        print(build.srcdir..v.." > "..build.target)
+        lprint(build.srcdir..v.." > "..build.target)
 
         local contents, err = readFile(build.srcdir..v)
         if contents then
@@ -118,32 +136,40 @@ if verbose then
         
         handle.close()
     end
-    print("-- FINISHED BUILD --")
+    lprint("-- FINISHED BUILD --\n")
     write("Verifying "..build.target.." exists: ")
     if fs.exists(build.target) then
         print("yes")
+        log("Verified that "..build.target.." exists.")
     else
         error("no\nFile does not exist: "..build.target..", what went wrong?")
     end
 else
+    log("Running quietly")
+    log("\n-- BEGIN BUILD --")
     write("Building: ")
 
     if fs.exists(build.target) then
+        log("Build target "..build.target.." already exists")
         if not replaceTarget then
-            print("Not allowed to replace: "..build.target)
+            print("Not allowed to replace target: "..build.target)
             print("=====\nMake sure to either delete "..build.target.." or change the 'replaceTarget' value to 'true' in "..args[1]..".")
             error()
         else
+            log("And we can replace it, so continue")
             fs.delete(build.target)
             handle = fs.open(build.target,"w")
             handle.close()
         end
     else
+        log("Target "..build.target.." doesn't exist, fresh build")
         handle = fs.open(build.target,"w")
         handle.close()
     end
 
     for k,v in pairs(build.files) do
+        log(build.srcdir..v.." > "..build.target)
+
         local contents, err = readFile(build.srcdir..v)
         if contents then
             handle = fs.open(build.target,"a")
@@ -154,13 +180,24 @@ else
         
         handle.close()
     end
-
     print("done")
+    log("-- FINISHED BUILD --\n")
 
-    write("Verifying build target exists: ")
+    write("Verifying file creation: ")
     if fs.exists(build.target) then
-        print("yes")
+        print("done")
+        log("Verified that "..build.target.." exists.")
     else
         error("no\nFile does not exist: "..build.target..", what went wrong?")
     end
+end
+
+if produceLog then
+    handle = fs.open(build.loglocation,"w")
+    for k,v in pairs(toLog) do
+        handle.writeLine(v)
+    end
+    handle.close()
+
+    print("Log produced at "..build.loglocation)
 end

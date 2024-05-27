@@ -1,0 +1,22 @@
+Stitch Log
+Info: v1 on ComputerCraft 1.110.2 (CraftOS-PC v2.8.2)
+Build name: Basic text file
+Target file: /tests/basic-text-file/output.txt
+Source files directory: /tests/basic-text-file/part/
+
+
+Building with: first.txt second.txt 
+Ensuring needed files in /tests/basic-text-file/part/ exist for build...
+first.txt: yes
+second.txt: yes
+All files present
+Running verbosely
+
+-- STARTING BUILD --
+Build target /tests/basic-text-file/output.txt already exists
+And we can replace it, so continue
+/tests/basic-text-file/part/first.txt > /tests/basic-text-file/output.txt
+/tests/basic-text-file/part/second.txt > /tests/basic-text-file/output.txt
+-- FINISHED BUILD --
+
+Verified that /tests/basic-text-file/output.txt exists.

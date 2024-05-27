@@ -3,6 +3,14 @@
 -- Licensed under the MIT License - <https://opensource.org/license/mit>
 
 local args = {...}
+
+if #args < 1 or args[1] == "help" then
+    print("Stitch - Efficient file cobbler")
+    print("Usage:\n stitch <file>")
+    print("You should point it to a Stitch-compatible JSON file. See docs for more details:\n <https://github.com/XDuskAshes/stitch/tree/main/docs>")
+    return
+end
+
 local ver = 1.0
 local jsonfile = args[1]
 local toLog = {}

@@ -7,7 +7,7 @@ As if a practical application would happen.
 
 # Documentation
 
-Under re-construction.
+Currently, there are two forms of docs, <u>Plaintext</u> and <u>Markdown</u>. They contain almost the same content with some wording and stylistic changes made to fit each respective type.
 
 # Contributing
 

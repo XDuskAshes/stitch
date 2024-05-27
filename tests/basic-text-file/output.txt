@@ -1,4 +1,2 @@
-
-lorem ipsum goes here, or something
-
-further of the above goes here, ig
+This is half of a full text file.
+And another.

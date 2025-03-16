@@ -1,13 +1,47 @@
 # Stitch
 
-A tool inspired by the Linux/*NIX 'make' tool, but for ComputerCraft:Tweaked. This comparison is used loosely, as all it really
-does is slap together a collection of files into what's effectively still plaintext. In theory, one could use this with CraftOS-PC and slap together a snipped up file in a practical application.
+A tool somewhat inspired by Linux/*NIX `make` with a lot of liberties taken. This is a simple and fast file concatenator.
 
 As if a practical application would happen.
 
 # Documentation
 
-Currently, there are two forms of docs, <u>Plaintext</u> and <u>Markdown</u>. They contain almost the same content with some wording and stylistic changes made to fit each respective type.
+`/docs/how-to.txt`:
+```
+Stitch v2.0 and onward - a how-to
+
+Stitch requires two things: A file listing a bunch of files to put together and an output file.
+
+The listing of files is in a Comma-Separated Value (CSV) format. You can either provide a CSV
+file or just a CSV-format string. Either works. You'll need to provide an output file after
+that so Stitch knows what to do with all the files you just told it to put together.
+
+Note: for now, all file paths must be abolute paths.
+
+Examples:
+
+-- With a CSV file pre-made: --
+
+The CSV file could look like:
+-----
+/src/foo.lua,/src/hello.lua,/src/somelib.lua,/src/bar.lua
+-----
+
+And the command could look like: `stitch stitch.csv baz.lua`
+
+-- Without a CSV file pre-made: --
+
+The command could look like: `stitch src/foo.lua,/src/hello.lua,/src/somelib.lua baz.lua`
+
+
+
+The CSV contents can be any length only to the limits of your environment or system memory.
+
+If the output file already exists, you can put 'overwrite' on the end to forcefully overwrite it.
+
+This is all intentionally simple as Stitch v1.0 was overly complex. I decided on a simple way
+to shove files together.
+```
 
 # Contributing
 

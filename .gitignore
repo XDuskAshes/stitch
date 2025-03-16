@@ -1,8 +1,0 @@
-/stitch.log
-
-# Documentation stuff
-/docs/*.aux
-/docs/*.log
-/docs/*.pdf
-# ^ The main reason for not including .pdf is because you'll be expected to compile it yourself.
-# If you can't compile it, or are just lazy, use Overleaf or a different online LaTeX compiler.

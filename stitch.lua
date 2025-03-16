@@ -20,8 +20,8 @@ local function checkArgs() -- Checks args[2] and args[3] for the inputs.
     end
 
     if fs.exists(args[2]) then
-        if not args[3] == "overwrite" then
-            error("Already exists: "..args[2].."\nPass 'overwrite' at the end of your command to allow overwriting.")
+        if not args[3] or not args[3] == "overwrite" then
+            error("Already exists: "..args[2].."\nPass 'overwrite' at the end of your command to allow overwriting.",0)
         end
     end
 end

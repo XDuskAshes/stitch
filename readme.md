@@ -4,6 +4,8 @@ A tool for ComputerCraft:Tweaked somewhat inspired by Linux/\*NIX `make` with a 
 
 As if a practical application would happen.
 
+NOTE: Has been entirely moved to [Codeberg](https://codeberg.org/XDuskAshes/stitch/). This repository will stop recieving updates.
+
 # Documentation
 
 `/docs/how-to.txt`:

@@ -1,6 +1,6 @@
 # Stitch
 
-A tool somewhat inspired by Linux/*NIX `make` with a lot of liberties taken. This is a simple and fast file concatenator.
+A tool for ComputerCraft:Tweaked somewhat inspired by Linux/\*NIX `make` with a lot of liberties taken. This is a simple and fast file concatenator.
 
 As if a practical application would happen.
 

@@ -25,7 +25,7 @@ The command could look like: `stitch src/foo.lua,/src/hello.lua,/src/somelib.lua
 
 
 
-The CSV contents can be any length only to the limits of your environment or system memory.
+The CSV contents can be any length only to the limits of your environment, your system memory, or the 32-bit/64-bit integer limit.
 
 If the output file already exists, you can put 'overwrite' on the end to forcefully overwrite it.
 
